@@ -7,6 +7,7 @@
 
 import Cocoa
 import SwiftUI
+import ApkParser
 
 @main
 class AppDelegate: NSObject, NSApplicationDelegate {
@@ -16,7 +17,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Create the SwiftUI view that provides the window contents.
-        let contentView = ContentView()
+        let apk = ApkModel(appName: "my.app",packageName: "com.myapp", targetSdkVersion: "29",minSdkVersion: "16",appVersion: "1.0", nativeCode: ["arm64-v8a", "armeabi-v7a", "x86", "x86_64"], permissions: ["android.permission.VIBRATE"])
+        let contentView = ContentView(apk: apk)
+
 
         // Create the window and set the content view.
         window = NSWindow(

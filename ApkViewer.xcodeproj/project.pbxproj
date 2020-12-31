@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -14,6 +14,7 @@
 		C8F2D741259D5A6D0000FE60 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C8F2D73F259D5A6D0000FE60 /* Main.storyboard */; };
 		C8F2D74D259D5A6D0000FE60 /* ApkViewerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F2D74C259D5A6D0000FE60 /* ApkViewerTests.swift */; };
 		C8F2D758259D5A6D0000FE60 /* ApkViewerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F2D757259D5A6D0000FE60 /* ApkViewerUITests.swift */; };
+		C8F2D7A4259E3B8B0000FE60 /* ApkParser in Frameworks */ = {isa = PBXBuildFile; productRef = C8F2D7A3259E3B8B0000FE60 /* ApkParser */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +49,7 @@
 		C8F2D753259D5A6D0000FE60 /* ApkViewerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ApkViewerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8F2D757259D5A6D0000FE60 /* ApkViewerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApkViewerUITests.swift; sourceTree = "<group>"; };
 		C8F2D759259D5A6D0000FE60 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C8F2D798259E39680000FE60 /* ApkParser */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ApkParser; path = ../ApkParser; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +57,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C8F2D7A4259E3B8B0000FE60 /* ApkParser in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,10 +81,12 @@
 		C8F2D72A259D5A6A0000FE60 = {
 			isa = PBXGroup;
 			children = (
+				C8F2D798259E39680000FE60 /* ApkParser */,
 				C8F2D735259D5A6A0000FE60 /* ApkViewer */,
 				C8F2D74B259D5A6D0000FE60 /* ApkViewerTests */,
 				C8F2D756259D5A6D0000FE60 /* ApkViewerUITests */,
 				C8F2D734259D5A6A0000FE60 /* Products */,
+				C8F2D7A2259E3B8B0000FE60 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -135,6 +140,13 @@
 			path = ApkViewerUITests;
 			sourceTree = "<group>";
 		};
+		C8F2D7A2259E3B8B0000FE60 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -151,6 +163,9 @@
 			dependencies = (
 			);
 			name = ApkViewer;
+			packageProductDependencies = (
+				C8F2D7A3259E3B8B0000FE60 /* ApkParser */,
+			);
 			productName = ApkViewer;
 			productReference = C8F2D733259D5A6A0000FE60 /* ApkViewer.app */;
 			productType = "com.apple.product-type.application";
@@ -600,6 +615,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		C8F2D7A3259E3B8B0000FE60 /* ApkParser */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ApkParser;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = C8F2D72B259D5A6A0000FE60 /* Project object */;
 }
