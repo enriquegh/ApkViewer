@@ -49,7 +49,7 @@
 		C8F2D753259D5A6D0000FE60 /* ApkViewerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ApkViewerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8F2D757259D5A6D0000FE60 /* ApkViewerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApkViewerUITests.swift; sourceTree = "<group>"; };
 		C8F2D759259D5A6D0000FE60 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C8F2D798259E39680000FE60 /* ApkParser */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ApkParser; path = ../ApkParser; sourceTree = "<group>"; };
+		C8F2D7B325A0001B0000FE60 /* ApkParser */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ApkParser; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,7 +81,7 @@
 		C8F2D72A259D5A6A0000FE60 = {
 			isa = PBXGroup;
 			children = (
-				C8F2D798259E39680000FE60 /* ApkParser */,
+				C8F2D7B325A0001B0000FE60 /* ApkParser */,
 				C8F2D735259D5A6A0000FE60 /* ApkViewer */,
 				C8F2D74B259D5A6D0000FE60 /* ApkViewerTests */,
 				C8F2D756259D5A6D0000FE60 /* ApkViewerUITests */,
