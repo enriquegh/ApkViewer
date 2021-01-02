@@ -9,7 +9,7 @@ import SwiftUI
 import ApkParser
 
 struct ContentView: View {
-    var apk:ApkModel
+    @State private var apk:ApkModel = ApkModel()
     @State private var fileContent = "";
     @State private var fileUrl:URL = URL(fileURLWithPath: "/my/path");
     @State private var showDocumentPicker = false;
@@ -59,7 +59,7 @@ struct ContentView: View {
             }
             HStack {
                 Text("Native Code libraries:")
-                Text(apk.nativeCode.joined(separator: ", "))
+                Text(apk.nativeCode)
             }
 
         }.frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -85,14 +85,15 @@ struct ContentView: View {
     func parseFile() {
         let parser = ApkParser(apkPath: self.fileUrl.path)
         parser.load()
+        parser.parse()
+        self.apk = parser.createApkModel()
     }
 }
 
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        let apk = ApkModel(appName: "my.app",packageName: "com.myapp", targetSdkVersion: "29",minSdkVersion: "16",appVersion: "1.0", nativeCode: ["arm64-v8a", "armeabi-v7a", "x86", "x86_64"], permissions: ["android.permission.VIBRATE"])
-        ContentView(apk: apk)
+        ContentView()
     }
 }
 
