@@ -153,7 +153,7 @@ public class ApkParser {
     }
     
     public func createApkModel() -> ApkModel {
-        return ApkModel(appName: self.appName, packageName: self.packageName, targetSdkVersion: self.targetSdkVersion, minSdkVersion: self.minSdkVersion, appVersion: self.appVersion, nativeCode: self.nativeCode ?? "", permissions: self.permissions ?? [""], iconImage: self.iconImage ?? NSImage())
+        return ApkModel(appName: self.appName, packageName: self.packageName, targetSdkVersion: self.targetSdkVersion, minSdkVersion: self.minSdkVersion, appVersion: self.appVersion, nativeCode: self.nativeCode, permissions: self.permissions, iconImage: self.iconImage)
     }
 }
 

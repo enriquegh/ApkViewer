@@ -55,13 +55,13 @@ struct ContentView: View {
 
             HStack {
                 Text("Permissions:")
-                Text(apk.permissions.joined(separator: ", "))
+                Text(apk.permissions?.joined(separator: ", ") ?? "")
             }
             HStack {
                 Text("Native Code libraries:")
-                Text(apk.nativeCode)
+                Text(apk.nativeCode ?? "No native codes found")
             }
-            Image(nsImage: apk.iconImage)
+            Image(nsImage: apk.iconImage ?? NSImage())
 
         }.frame(maxWidth: .infinity, maxHeight: .infinity)
     }

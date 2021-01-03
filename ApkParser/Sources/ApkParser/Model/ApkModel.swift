@@ -14,12 +14,12 @@ public struct ApkModel {
     public var targetSdkVersion:String
     public var minSdkVersion:String
     public var appVersion:String
-    public var nativeCode: String
-    public var permissions: [String]
-    public var iconImage: NSImage
+    public var nativeCode: String?
+    public var permissions: [String]?
+    public var iconImage: NSImage?
     
     public init(appName:String, packageName:String, targetSdkVersion:String, minSdkVersion:String,
-                appVersion:String, nativeCode: String, permissions:[String], iconImage:NSImage) {
+                appVersion:String, nativeCode: String?, permissions:[String]?, iconImage:NSImage?) {
         self.appName = appName
         self.packageName = packageName
         self.targetSdkVersion = targetSdkVersion

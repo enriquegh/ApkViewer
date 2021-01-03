@@ -62,8 +62,8 @@ class PreviewViewController: NSViewController, QLPreviewingController {
         self.appVersion.stringValue = apk.appVersion
         self.targetSDK.stringValue = apk.targetSdkVersion
         self.minSDK.stringValue = apk.minSdkVersion
-        self.nativeCode.stringValue = apk.nativeCode
-        self.permissions.stringValue = apk.permissions.joined(separator: ",")
+        self.nativeCode.stringValue = apk.nativeCode ?? "No native codes found"
+        self.permissions.stringValue = apk.permissions?.joined(separator: ",") ?? ""
         self.appIcon.image = self.apk.iconImage
         
         
