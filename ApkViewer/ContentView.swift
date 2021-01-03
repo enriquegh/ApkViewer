@@ -61,6 +61,7 @@ struct ContentView: View {
                 Text("Native Code libraries:")
                 Text(apk.nativeCode)
             }
+            Image(nsImage: apk.iconImage)
 
         }.frame(maxWidth: .infinity, maxHeight: .infinity)
     }
