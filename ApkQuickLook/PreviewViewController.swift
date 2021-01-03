@@ -19,6 +19,8 @@ class PreviewViewController: NSViewController, QLPreviewingController {
     @IBOutlet var minSDK: NSTextField!
     @IBOutlet var nativeCode: NSTextField!
     @IBOutlet var permissions: NSTextField!
+    @IBOutlet var appIcon: NSImageView!
+    var apk:ApkModel!
 
 
     
@@ -54,7 +56,7 @@ class PreviewViewController: NSViewController, QLPreviewingController {
         let parser = ApkParser(apkPath: url.path)
         parser.load()
         parser.parse()
-        let apk = parser.createApkModel()
+        self.apk = parser.createApkModel()
         self.appName.stringValue = apk.appName
         self.packageName.stringValue = apk.packageName
         self.appVersion.stringValue = apk.appVersion
@@ -62,7 +64,7 @@ class PreviewViewController: NSViewController, QLPreviewingController {
         self.minSDK.stringValue = apk.minSdkVersion
         self.nativeCode.stringValue = apk.nativeCode
         self.permissions.stringValue = apk.permissions.joined(separator: ",")
-
+        self.appIcon.image = self.apk.iconImage
         
         
         handler(nil)
