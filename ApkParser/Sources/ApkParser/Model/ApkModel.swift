@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Cocoa
 
 public struct ApkModel {
     public var appName:String
@@ -15,9 +16,10 @@ public struct ApkModel {
     public var appVersion:String
     public var nativeCode: String
     public var permissions: [String]
+    public var iconImage: NSImage
     
     public init(appName:String, packageName:String, targetSdkVersion:String, minSdkVersion:String,
-                appVersion:String, nativeCode: String, permissions:[String]) {
+                appVersion:String, nativeCode: String, permissions:[String], iconImage:NSImage) {
         self.appName = appName
         self.packageName = packageName
         self.targetSdkVersion = targetSdkVersion
@@ -25,6 +27,7 @@ public struct ApkModel {
         self.appVersion = appVersion
         self.nativeCode = nativeCode
         self.permissions = permissions
+        self.iconImage = iconImage
     }
     public init() {
         self.appName = "foo"
@@ -34,6 +37,7 @@ public struct ApkModel {
         self.appVersion = "1.0"
         self.nativeCode = "foobar"
         self.permissions = ["hello"]
+        self.iconImage = NSImage()
     }
 }
 

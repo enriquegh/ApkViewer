@@ -6,9 +6,16 @@
 //
 
 import Foundation
+import Zip
+import Cocoa
 
 @available(OSX 10.13, *)
 public class ApkParser {
+    
+    enum ValidationError: Error {
+        case imageNotFound
+    }
+    
     var appName:String!
     var packageName:String!
     var targetSdkVersion:String!
@@ -16,6 +23,9 @@ public class ApkParser {
     var appVersion:String!
     var nativeCode: String?
     var permissions: [String]?
+    var iconPath: String?
+    var iconImage: NSImage?
+    var densities: [String]!
     
     var rawOutput:NSString = ""
     var aaptPath:String = Bundle.module.path(forResource: "aapt", ofType: nil)!
@@ -45,7 +55,7 @@ public class ApkParser {
     
     public func parse() {
         let permissionsPattern = #"uses-permission[s,d,k,\d,-]*: name='([^']*)'.*"#
-        let pattern = #"package: name='(?<packageName>[^']*)'.*versionName='(?<appVersion>[^']*)'.*?(?:compileSdkVersion='(?<compileSdkVersion>[\d{2}]*)'.*)?sdkVersion:'(?<minSdkVersion>[^']*)'.*targetSdkVersion:'(?<targetSdkVersion>[^']*)'.*application-label:'(?<appName>[^']*)'.*native-code: (?<nativeCode>.*)"#
+        let pattern = #"package: name='(?<packageName>[^']*)'.*versionName='(?<appVersion>[^']*)'.*?(?:compileSdkVersion='(?<compileSdkVersion>[\d{2}]*)'.*)?sdkVersion:'(?<minSdkVersion>[^']*)'.*targetSdkVersion:'(?<targetSdkVersion>[^']*)'.*application-label:'(?<appName>[^']*)'.*densities: (?<densities>[,\d' ]*)\nnative-code: (?<nativeCode>.*)"#
         let stringOutput = self.rawOutput as String
         
         do {
@@ -72,10 +82,18 @@ public class ApkParser {
                 self.targetSdkVersion = getNamedCapture(regexMatch: match, stringOutput: stringOutput, captureName: "targetSdkVersion")
                 self.minSdkVersion = getNamedCapture(regexMatch: match, stringOutput: stringOutput, captureName: "minSdkVersion")
                 self.appVersion = getNamedCapture(regexMatch: match, stringOutput: stringOutput, captureName: "appVersion")
+                self.densities = getNamedCapture(regexMatch: match, stringOutput: stringOutput, captureName: "densities").components(separatedBy: " ").map {
+                    $0.replacingOccurrences(of: "'", with: "")
+                }
+                self.densities.removeAll(where: {Int($0) ?? 641 > 640})
                 self.nativeCode = getNamedCapture(regexMatch: match, stringOutput: stringOutput, captureName: "nativeCode")
                 
             }
             
+            getApplicationIconPath()
+            if (self.iconPath != nil) {
+                self.iconImage =  getApplicationIcon()
+            }
             
 
         } catch {
@@ -96,8 +114,46 @@ public class ApkParser {
         }
     }
     
+    func getApplicationIconPath() {
+        let stringOutput = self.rawOutput as String
+        let highestDensity = self.densities.sorted()[self.densities.count - 1]
+        let applicationIconPattern = "application-icon-\(highestDensity):'(?<applicationIconPath>[^']*)"
+
+        do {
+            let appIconRegex = try NSRegularExpression(pattern: applicationIconPattern, options: [])
+            if let match = appIconRegex.firstMatch(in: stringOutput, options: [], range: NSMakeRange(0, self.rawOutput.length)) {
+                self.iconPath = getNamedCapture(regexMatch: match, stringOutput: stringOutput, captureName: "applicationIconPath")
+            }
+        } catch {
+            print(error)
+        }
+        
+
+    }
+    
+    func getApplicationIcon() -> NSImage {
+        
+        var iconImage:NSImage = NSImage()
+        do {
+            Zip.addCustomFileExtension("apk")
+            let unzipDirectory = try Zip.quickUnzipFile(URL(fileURLWithPath: apkPath)) // Unzip
+            let fullIconPath = unzipDirectory.appendingPathComponent(self.iconPath!, isDirectory: false)
+            let data = try Data(contentsOf: fullIconPath)
+               guard let image = NSImage(data:data) else {
+                throw ValidationError.imageNotFound
+               }
+            iconImage = image
+            
+
+        } catch {
+            print(error)
+        }
+        
+        return iconImage
+    }
+    
     public func createApkModel() -> ApkModel {
-        return ApkModel(appName: self.appName, packageName: self.packageName, targetSdkVersion: self.targetSdkVersion, minSdkVersion: self.minSdkVersion, appVersion: self.appVersion, nativeCode: self.nativeCode ?? "", permissions: self.permissions ?? [""])
+        return ApkModel(appName: self.appName, packageName: self.packageName, targetSdkVersion: self.targetSdkVersion, minSdkVersion: self.minSdkVersion, appVersion: self.appVersion, nativeCode: self.nativeCode ?? "", permissions: self.permissions ?? [""], iconImage: self.iconImage ?? NSImage())
     }
 }
 
