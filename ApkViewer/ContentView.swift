@@ -81,14 +81,12 @@ struct ContentView: View {
     
     func openFile() {
         let panel = NSOpenPanel()
-        panel.nameFieldLabel = "Save cat image as:"
-        panel.nameFieldStringValue = "cat.jpg"
         panel.canChooseDirectories = false
         panel.canChooseFiles = true
         panel.allowsMultipleSelection = false
         panel.begin { response in
             if response == NSApplication.ModalResponse.OK, let fileUrl = panel.url {
-                self.fileContent = "Opening \(fileUrl.path)"
+                self.fileContent = "Selected \(fileUrl.path)"
                 self.fileUrl = fileUrl
             } else {
                 self.fileContent = "Cancel clicked in Save dialog"
