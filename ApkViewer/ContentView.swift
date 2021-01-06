@@ -12,20 +12,33 @@ struct ContentView: View {
     @State private var apk:ApkModel = ApkModel()
     @State private var fileContent = "";
     @State private var fileUrl:URL = URL(fileURLWithPath: "/my/path");
-    @State private var showDocumentPicker = false;
+    @State private var isFileSelected = false;
+    @State private var wasFileParsed = false;
+
+    
     var body: some View {
 
         VStack {
         
             VStack {
                 Text(fileContent).padding()
-                Button("Select file") {
-                    showDocumentPicker = true
+                Button(action: {
                     openFile()
-                }
-                Button("Parse file") {
+                    isFileSelected = true
+                    wasFileParsed = false
+
+                }, label: {
+                    Text("Select File")
+                })
+                Button(action:{
                     parseFile()
-                }
+                    isFileSelected = false
+                    wasFileParsed = true
+                    
+                } ,label:{
+                    Text("Parse file")
+                    
+                }).disabled(!isFileSelected || wasFileParsed)
             
             }
             HStack {
