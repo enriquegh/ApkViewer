@@ -41,40 +41,20 @@ struct ContentView: View {
                 }).disabled(!isFileSelected || wasFileParsed)
             
             }
+            Spacer()
             HStack {
-                Text("Application Name:")
-                Text(apk.appName)
+                Image(nsImage: apk.iconImage ?? NSImage())
+                    .padding(.trailing)
+                VStack {
+                    AppPropertyView(propertyName: "Application Name:", propertyValue: apk.appName)
+                    AppPropertyView(propertyName: "Version:", propertyValue: apk.appVersion)
+                    AppPropertyView(propertyName: "Package Name:", propertyValue: apk.packageName)
+                    AppPropertyView(propertyName: "Target SDK version:", propertyValue: apk.targetSdkVersion)
+                    AppPropertyView(propertyName: "Min SDK version:", propertyValue: apk.minSdkVersion)
+                    AppPropertyView(propertyName: "Permissions:", propertyValue: apk.permissions?.joined(separator: "\n") ?? "")
+                    AppPropertyView(propertyName: "Native Code libraries:", propertyValue: apk.nativeCode ?? "No native codes found")
+                }
             }
-            
-            HStack {
-                Text("Version:")
-                Text(apk.appVersion)
-            }
-            
-            HStack {
-                Text("Package Name:")
-                Text(apk.packageName)
-            }
-            
-            HStack {
-                Text("Target SDK version:")
-                Text(apk.targetSdkVersion)
-            }
-            
-            HStack {
-                Text("Min SDK version:")
-                Text(apk.minSdkVersion)
-            }
-
-            HStack {
-                Text("Permissions:")
-                Text(apk.permissions?.joined(separator: ", ") ?? "")
-            }
-            HStack {
-                Text("Native Code libraries:")
-                Text(apk.nativeCode ?? "No native codes found")
-            }
-            Image(nsImage: apk.iconImage ?? NSImage())
 
         }.frame(maxWidth: .infinity, maxHeight: .infinity)
     }
