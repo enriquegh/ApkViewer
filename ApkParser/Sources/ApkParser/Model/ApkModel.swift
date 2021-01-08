@@ -30,13 +30,13 @@ public struct ApkModel {
         self.iconImage = iconImage
     }
     public init() {
-        self.appName = "foo"
-        self.packageName = "bar"
-        self.targetSdkVersion = "1"
-        self.minSdkVersion = "2"
-        self.appVersion = "1.0"
-        self.nativeCode = "foobar"
-        self.permissions = ["hello"]
+        self.appName = "My Super App"
+        self.packageName = "com.package.myapp"
+        self.targetSdkVersion = "29"
+        self.minSdkVersion = "20"
+        self.appVersion = "1.6.1-debug"
+        self.nativeCode = "'armeabi' 'armeabi-v7' 'x86'"
+        self.permissions = ["android.permission.WRITE_EXTERNAL_STORAGE", "android.permission.WRITE_EXTERNAL_STORAGE", "android.permission.WRITE_EXTERNAL_STORAGE", "android.permission.WRITE_EXTERNAL_STORAGE", "android.permission.WRITE_EXTERNAL_STORAGE"]
         self.iconImage = NSImage()
     }
 }
