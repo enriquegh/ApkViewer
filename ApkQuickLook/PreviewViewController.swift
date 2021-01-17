@@ -20,7 +20,6 @@ class PreviewViewController: NSViewController, QLPreviewingController {
     @IBOutlet var nativeCode: NSTextField!
     @IBOutlet var permissions: NSTextField!
     @IBOutlet var appIcon: NSImageView!
-    var apk:ApkModel!
 
 
     
@@ -55,17 +54,25 @@ class PreviewViewController: NSViewController, QLPreviewingController {
         // Quick Look will display a loading spinner while the completion handler is not called.
         let parser = ApkParser(apkPath: url.path)
         parser.load()
-        parser.parse()
-        self.apk = parser.createApkModel()
-        self.appName.stringValue = apk.appName
-        self.packageName.stringValue = apk.packageName
-        self.appVersion.stringValue = apk.appVersion
-        self.targetSDK.stringValue = apk.targetSdkVersion
-        self.minSDK.stringValue = apk.minSdkVersion
-        self.nativeCode.stringValue = apk.nativeCode ?? "No native codes found"
-        self.permissions.stringValue = apk.permissions?.joined(separator: ",") ?? ""
-        self.appIcon.image = self.apk.iconImage
-        
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            guard let self = self else {
+              return
+            }
+            parser.parse()
+            let apk:ApkModel = parser.createApkModel()
+            DispatchQueue.main.async { [weak self] in
+                
+                self?.appName.stringValue = apk.appName
+                self?.packageName.stringValue = apk.packageName
+                self?.appVersion.stringValue = apk.appVersion
+                self?.targetSDK.stringValue = apk.targetSdkVersion
+                self?.minSDK.stringValue = apk.minSdkVersion
+                self?.nativeCode.stringValue = apk.nativeCode ?? "No native codes found"
+                self?.permissions.stringValue = apk.permissions?.joined(separator: ",") ?? ""
+                self?.appIcon.image = apk.iconImage
+            }
+
+        }
         
         handler(nil)
     }
