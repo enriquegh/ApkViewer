@@ -55,7 +55,7 @@ public class ApkParser {
     
     public func parse() {
         let permissionsPattern = #"uses-permission[s,d,k,\d,-]*: name='([^']*)'.*"#
-        let pattern = #"package: name='(?<packageName>[^']*)'.*versionName='(?<appVersion>[^']*)'.*?(?:compileSdkVersion='(?<compileSdkVersion>[\d{2}]*)'.*)?sdkVersion:'(?<minSdkVersion>[^']*)'.*targetSdkVersion:'(?<targetSdkVersion>[^']*)'.*application-label:'(?<appName>[^']*)'.*densities: (?<densities>[,\d' ]*)\nnative-code: (?<nativeCode>.*)"#
+        let pattern = #"package: name='(?<packageName>[^']*)'.*versionName='(?<appVersion>[^']*)'.*?(?:compileSdkVersion='(?<compileSdkVersion>[\d{2}]*)'.*)?sdkVersion:'(?<minSdkVersion>[^']*)'.*targetSdkVersion:'(?<targetSdkVersion>[^']*)'.*application-label:'(?<appName>[^']*)'.*densities: (?<densities>[,\d' ]*)(?:\n)?(?:native-code: (?<nativeCode>.*))?"#
         let stringOutput = self.rawOutput as String
         
         do {
